@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { AuthRequest } from '../../middlewares/auth';
 
 export class UsersController {
-  async getAllUsers(req: Request, res: Response) {
+  async getAllUsers(req: Request, res: Response): Promise<Response | void> {
     try {
       const { data, error } = await supabase
         .from('users')
@@ -27,7 +27,7 @@ export class UsersController {
     }
   }
 
-  async getUserById(req: Request, res: Response) {
+  async getUserById(req: Request, res: Response): Promise<Response | void> {
     try {
       const { id } = req.params;
 
@@ -54,7 +54,7 @@ export class UsersController {
     }
   }
 
-  async updateProfile(req: AuthRequest, res: Response) {
+  async updateProfile(req: AuthRequest, res: Response): Promise<Response | void> {
     try {
       const userId = req.user?.id;
       if (!userId) {

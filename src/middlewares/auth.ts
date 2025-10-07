@@ -8,7 +8,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export async function authenticateToken(req: AuthRequest, res: Response, next: NextFunction) {
+export async function authenticateToken(req: AuthRequest, res: Response, next: NextFunction): Promise<Response | void> {
   try {
     const authHeader = req.headers.authorization;
     
@@ -44,7 +44,7 @@ export async function authenticateToken(req: AuthRequest, res: Response, next: N
 }
 
 // Legacy middleware for backward compatibility
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction): Response | void {
   const userId = req.headers['x-user-id'] as string;
   
   if (!userId) {

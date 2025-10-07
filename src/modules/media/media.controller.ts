@@ -5,7 +5,7 @@ import * as service from './media.service';
 /**
  * POST /upload - Backend proxy upload
  */
-export async function postUpload(req: AuthRequest, res: Response) {
+export async function postUpload(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     if (!req.file) {
       return res.status(400).json({ error: { message: 'No file provided' } });
@@ -47,7 +47,7 @@ export async function postUpload(req: AuthRequest, res: Response) {
 /**
  * POST /media/signed-upload - Create pre-signed upload URL
  */
-export async function postSignedUpload(req: AuthRequest, res: Response) {
+export async function postSignedUpload(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     const { mime } = req.body;
     
@@ -75,7 +75,7 @@ export async function postSignedUpload(req: AuthRequest, res: Response) {
 /**
  * POST /media/commit - Commit metadata after pre-signed upload
  */
-export async function postCommit(req: AuthRequest, res: Response) {
+export async function postCommit(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     const { bucket, path, mime, size_bytes, kind, width, height, duration_sec } = req.body;
 
@@ -120,7 +120,7 @@ export async function postCommit(req: AuthRequest, res: Response) {
 /**
  * GET /media/:id/url - Get signed download URL
  */
-export async function getSignedUrl(req: AuthRequest, res: Response) {
+export async function getSignedUrl(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     const { id } = req.params;
     const userId = req.user!.id;
@@ -147,7 +147,7 @@ export async function getSignedUrl(req: AuthRequest, res: Response) {
 /**
  * DELETE /media/:id - Delete media
  */
-export async function deleteMedia(req: AuthRequest, res: Response) {
+export async function deleteMedia(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     const { id } = req.params;
     const userId = req.user!.id;
@@ -215,7 +215,7 @@ export async function listAllMedia(_req: any, res: Response) {
 /**
  * GET /media/:id/download - Download media file
  */
-export async function downloadMedia(req: AuthRequest, res: Response) {
+export async function downloadMedia(req: AuthRequest, res: Response): Promise<Response | void> {
   try {
     const { id } = req.params;
     const userId = req.user?.id;

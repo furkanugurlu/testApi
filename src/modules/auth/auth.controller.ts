@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 
 export class AuthController {
 
-  async register(req: Request, res: Response) {
+  async register(req: Request, res: Response): Promise<Response | void> {
     try {
       const { email, password, username, fullName } = req.body;
 
@@ -70,7 +70,7 @@ export class AuthController {
     }
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response): Promise<Response | void> {
     try {
       const { email, password } = req.body;
 
@@ -127,7 +127,7 @@ export class AuthController {
     }
   }
 
-  async logout(req: Request, res: Response) {
+  async logout(req: Request, res: Response): Promise<Response | void> {
     try {
       const { error } = await supabase.auth.signOut();
       
@@ -148,7 +148,7 @@ export class AuthController {
     }
   }
 
-  async getCurrentUser(req: Request, res: Response) {
+  async getCurrentUser(req: Request, res: Response): Promise<Response | void> {
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {

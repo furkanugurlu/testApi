@@ -7,7 +7,7 @@ import { getMimeType, getFileExtension } from '../../utils/mime';
 import { generateUniquePath } from '../../utils/path';
 
 export class PostsController {
-  async createPost(req: AuthRequest, res: Response) {
+  async createPost(req: AuthRequest, res: Response): Promise<Response | void> {
     try {
       const userId = req.user?.id;
       if (!userId) {
@@ -96,7 +96,7 @@ export class PostsController {
         } catch (mediaError) {
           console.error('Media processing error:', mediaError);
           return res.status(400).json({
-            error: `Media processing failed: ${mediaError.message}`
+            error: `Media processing failed: ${mediaError instanceof Error ? mediaError.message : 'Unknown error'}`
           });
         }
       }
@@ -153,7 +153,7 @@ export class PostsController {
     }
   }
 
-  async getAllPosts(req: Request, res: Response) {
+  async getAllPosts(req: Request, res: Response): Promise<Response | void> {
     try {
       const { page = 1, limit = 10 } = req.query;
       const offset = (Number(page) - 1) * Number(limit);
@@ -218,7 +218,7 @@ export class PostsController {
     }
   }
 
-  async getPostById(req: Request, res: Response) {
+  async getPostById(req: Request, res: Response): Promise<Response | void> {
     try {
       const { id } = req.params;
 
@@ -267,7 +267,7 @@ export class PostsController {
     }
   }
 
-  async getUserPosts(req: Request, res: Response) {
+  async getUserPosts(req: Request, res: Response): Promise<Response | void> {
     try {
       const { userId } = req.params;
       const { page = 1, limit = 10 } = req.query;
@@ -335,7 +335,7 @@ export class PostsController {
     }
   }
 
-  async updatePost(req: AuthRequest, res: Response) {
+  async updatePost(req: AuthRequest, res: Response): Promise<Response | void> {
     try {
       const userId = req.user?.id;
       if (!userId) {
@@ -418,7 +418,7 @@ export class PostsController {
     }
   }
 
-  async deletePost(req: AuthRequest, res: Response) {
+  async deletePost(req: AuthRequest, res: Response): Promise<Response | void> {
     try {
       const userId = req.user?.id;
       if (!userId) {
